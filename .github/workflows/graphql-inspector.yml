@@ -1,0 +1,25 @@
+name: GraphQL Inspector
+
+on: [push, pull_request]
+
+jobs:
+  schema-inspection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+
+      - name: GraphQL Inspector
+        uses: kamilkisiela/graphql-inspector@release-1701263349990
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          schema: 'path/to/your/schema.graphql'
+          # Use below for comparing against a live endpoint
+          # schema: 'http://yourdomain.com/graphql'
+          # Or for comparison with another file
+          # compare-to: 'path/to/previous/schema.graphql'
